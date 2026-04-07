@@ -6,17 +6,14 @@
   "name": "Solid-rod-bent-corner",
   "ioValues": [
     {
-      "name": "Pipe",
-      "ioValue": 10
-    },
-    {
       "name": "Tube_radius",
       "ioValue": 5,
       "currentEquation": "5"
     },
     {
-      "name": "Input",
-      "ioValue": 10
+      "name": "Bend_radius",
+      "ioValue": 30,
+      "currentEquation": "30"
     }
   ],
   "topLevel": true,
@@ -35,8 +32,8 @@
     },
     {
       "atomType": "Code",
-      "x": 0.35610589239965845,
-      "y": 0.4627329192546583,
+      "x": 0.426131511528608,
+      "y": 0.406832298136646,
       "uniqueID": "id-432",
       "ioValues": [
         {
@@ -58,14 +55,6 @@
     {
       "atomType": "Input",
       "x": 0.025384615384615384,
-      "y": 0.35093167701863354,
-      "uniqueID": "id-441",
-      "name": "Pipe",
-      "type": "boolean"
-    },
-    {
-      "atomType": "Input",
-      "x": 0.025384615384615384,
       "y": 0.48447204968944096,
       "uniqueID": "id-444",
       "name": "Tube_radius"
@@ -74,10 +63,27 @@
       "atomType": "Input",
       "x": 0.025384615384615384,
       "y": 0.5767797419971332,
-      "uniqueID": "id-447"
+      "uniqueID": "id-447",
+      "name": "Bend_radius"
     }
   ],
-  "allConnectors": [],
+  "allConnectors": [
+    {
+      "ap2Name": "number or geometry",
+      "ap1ID": "id-432",
+      "ap2ID": "id-430"
+    },
+    {
+      "ap2Name": "tubeRadius",
+      "ap1ID": "id-444",
+      "ap2ID": "id-432"
+    },
+    {
+      "ap2Name": "bendRadius",
+      "ap1ID": "id-447",
+      "ap2ID": "id-432"
+    }
+  ],
   "unitsKey": "Unitless",
   "fileTypeVersion": 1,
   "filetypeVersion": 1
