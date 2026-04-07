@@ -1,13 +1,84 @@
 {
-    "atomType": "Molecule",
-    "x": 0,
-    "y": 0,
-    "uniqueID": "id-429",
-    "name": "Solid-rod-bent-corner",
-    "topLevel": true,
-    "allAtoms": [],
-    "allConnectors": [],
-    "unitsKey": "Unitless",
-    "fileTypeVersion": 1,
-    "filetypeVersion": 1
+  "atomType": "Molecule",
+  "x": 0,
+  "y": 0,
+  "uniqueID": "id-429",
+  "name": "Solid-rod-bent-corner",
+  "ioValues": [
+    {
+      "name": "Pipe",
+      "ioValue": 10
+    },
+    {
+      "name": "Tube_radius",
+      "ioValue": 5,
+      "currentEquation": "5"
+    },
+    {
+      "name": "Input",
+      "ioValue": 10
+    }
+  ],
+  "topLevel": true,
+  "allAtoms": [
+    {
+      "atomType": "Output",
+      "x": 0.98,
+      "y": 0.5,
+      "uniqueID": "id-430",
+      "ioValues": [
+        {
+          "name": "number or geometry",
+          "ioValue": "__GEOMETRY_INPUT__"
+        }
+      ]
+    },
+    {
+      "atomType": "Code",
+      "x": 0.35610589239965845,
+      "y": 0.4627329192546583,
+      "uniqueID": "id-432",
+      "ioValues": [
+        {
+          "name": "tubeRadius",
+          "ioValue": 5
+        },
+        {
+          "name": "bendRadius",
+          "ioValue": 30
+        },
+        {
+          "name": "wallThickness",
+          "ioValue": 1.5
+        }
+      ],
+      "codeVersion": 1,
+      "code": "const Inputs = [\n  { inputName: \"tubeRadius\", type: \"number\", defaultValue: 5 },\n  { inputName: \"bendRadius\", type: \"number\", defaultValue: 30 },\n  { inputName: \"wallThickness\", type: \"number\", defaultValue: 1.5 },\n  \n  { inputName: \"hollow\", type: \"boolean\", defaultValue: \"true\" }\n  \n];\n\nif (!hollow){\n  console.log(hollow)\nconst mid = bendRadius / Math.sqrt(2);\n\n// Quarter-circle arc path in the XZ plane\nconst path = replicad.draw()\n  .movePointerTo([bendRadius, 0])\n  .threePointsArcTo([0, bendRadius], [mid, mid])\n  .done()\n  .sketchOnPlane(\"XZ\");\n\n// Circular cross-section swept along the path\nconst drawProfile = (plane, origin) => {\n  const profilePlane = new replicad.Plane(origin, [0, 0, -1], plane.zDir);\n  return replicad.drawCircle(tubeRadius).sketchOnPlane(profilePlane);\n};\n\nconst bend = path.sweepSketch(drawProfile, { frenet: true });\n\nreturn {\n  geometry: [bend],\n  dimension: \"3D\",\n  tags: [\"bend\"],\n  color: \"#8a8a8a\",\n  plane: null,\n  bom: []\n};\n}\nelse{\n\nconst mid = bendRadius / Math.sqrt(2);\n\nconst path = replicad.draw()\n  .movePointerTo([bendRadius, 0])\n  .threePointsArcTo([0, bendRadius], [mid, mid])\n  .done()\n  .sketchOnPlane(\"XZ\");\n\nconst drawProfile = (plane, origin) => {\n  const profilePlane = new replicad.Plane(origin, [0, 0, -1], plane.zDir);\n  const outer = replicad.drawCircle(tubeRadius);\n  const inner = replicad.drawSingleCircle(tubeRadius - wallThickness);\n  return outer.cut(inner).sketchOnPlane(profilePlane);\n};\n\nconst bend = path.sweepSketch(drawProfile, { frenet: true });\n\n  return {\n  geometry: [bend],\n  dimension: \"3D\",\n  tags: [\"bend\"],\n  color: \"#8a8a8a\",\n  plane: null,\n  bom: []\n};\n}"
+    },
+    {
+      "atomType": "Input",
+      "x": 0.025384615384615384,
+      "y": 0.35093167701863354,
+      "uniqueID": "id-441",
+      "name": "Pipe",
+      "type": "boolean"
+    },
+    {
+      "atomType": "Input",
+      "x": 0.025384615384615384,
+      "y": 0.48447204968944096,
+      "uniqueID": "id-444",
+      "name": "Tube_radius"
+    },
+    {
+      "atomType": "Input",
+      "x": 0.025384615384615384,
+      "y": 0.5767797419971332,
+      "uniqueID": "id-447"
+    }
+  ],
+  "allConnectors": [],
+  "unitsKey": "Unitless",
+  "fileTypeVersion": 1,
+  "filetypeVersion": 1
 }
